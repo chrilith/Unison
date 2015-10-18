@@ -1,3 +1,7 @@
 {
-	"name": "chrilith/unison"
+	"name": "chrilith/unison",
+
+	"autoload": {
+		"psr-4": {"Unison\\": "src/"}
+    }
 }
