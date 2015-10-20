@@ -15,8 +15,9 @@ class HtmlHelper {
 			$controllerName = get_class($this->viewContext->controller);
 		}
 		$ctx = new ViewContext();
-		$controller = new $controllerName($ctx);
+		$controller = new $controllerName();
 		$ctx->controller = $controller;
+		$ctx->isChildAction = true;
 
 		$viewResult = $controller->prepareAction($actionName);
 

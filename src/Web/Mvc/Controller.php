@@ -4,7 +4,11 @@ namespace Unison\Web\Mvc;
 
 class Controller {
 
-	public function __construct() { }
+	public $viewData;
+
+	public function __construct() {
+		$this->viewData = array();
+	}
 
 	public function prepareAction($action = null) {
 		$file = explode('/', $action ? $action : $_SERVER["SCRIPT_FILENAME"]);
