@@ -4,24 +4,18 @@ namespace Unison\Web\Mvc;
 
 class ViewContext {
 
-	public $controller;
-
 	public $view;
+
+	public $viewData;
 
 	public $isChildAction;
 
-	// Late binding to the viewData controller. Could also be set directly
-	// in the constructor adding a viewData property to this class.
-	public function __get($prop) {
-		switch ($prop) {
-			case 'viewData':
-				return $this->controller->viewData;
-			default:
-				throw new \Exception('No "' . $prop . '" property found on "ViewContext".');
-		}
+	public function __construct($viewData) {
+		$this->viewData = $viewData ? $viewData : array();
 	}
 
 	public function __clone() {
+		// Keep in mind that viewData is an array and arrays are structs in PHP
 		$this->view = null;
 	}
 

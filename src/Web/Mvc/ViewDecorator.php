@@ -10,21 +10,22 @@ abstract class ViewDecorator {
 	}
 
 	public function render($viewName, $model) {
-		$this->parent->model = $model;
+		$this->parent->viewContext->viewData["Model"] = $model;
 	}
 
 	public function __get($prop) {
 		switch ($prop) {
 			case 'html':
-			case 'model':
 			case 'url':
 			case 'viewContext':
 			case 'layout':
 				return $this->parent->{$prop};
+			case 'model':
+				return $this->parent->viewContext->viewData["Model"];
 			case 'viewData':
 				return $this->parent->viewContext->viewData;
 			default:
-				return null;
+				throw new \Exception('Undefined property: ' . get_class($this->parent) . '::$' . $prop . '.');
 		}
 	}
 

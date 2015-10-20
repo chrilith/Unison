@@ -12,8 +12,7 @@ class ViewResult extends ActionResult {
 	}
 
 	public function execute($controller) {
-		$ctx = new ViewContext();
-		$ctx->controller = $controller;
+		$ctx = new ViewContext($controller->viewData);
 		$page = new ViewPage($ctx);
 
 		return $this->render($page, $this->viewName, $page->viewContext->viewData["Model"]);
