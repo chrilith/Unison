@@ -13,6 +13,7 @@ class ViewResult extends ActionResult {
 
 	public function execute($controller) {
 		$ctx = new ViewContext($controller->viewData);
+		$ctx->controller = $controller;	// FIXME: not defined in this class, get rid of this (used only by HtmlHelper)
 		$page = new ViewPage($ctx);
 
 		return $this->render($page, $this->viewName, $page->viewContext->viewData["Model"]);
