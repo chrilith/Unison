@@ -10,7 +10,7 @@ class Controller {
 		$this->viewData = array();
 	}
 
-	public function prepareAction($action = null) {
+	public function executeAction($action = null) {
 		$file = explode('/', $action ? $action : $_SERVER["SCRIPT_FILENAME"]);
 		$action = end($file);
 
@@ -26,7 +26,7 @@ class Controller {
 	protected function view($viewName, $model = null) {
 		$result = new ViewResult();
 		$result->viewName = $viewName;
-		$result->model = $model;
+		$this->viewData["Model"] = $model;
 
 		return $result;
 	}

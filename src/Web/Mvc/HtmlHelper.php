@@ -14,21 +14,15 @@ class HtmlHelper {
 		if (!$controllerName) {
 			$controllerName = get_class($this->viewContext->controller);
 		}
-		$ctx = new ViewContext();
 		$controller = new $controllerName();
-		$ctx->controller = $controller;
-		$ctx->isChildAction = true;
+//		$ctx->isChildAction = true;
+		$actionResult = $controller->executeAction($actionName);
 
-		$viewResult = $controller->prepareAction($actionName);
-
-		ob_start();
-		$page = new ViewPage($ctx);
-		$page->render($viewResult->viewName, $viewResult->model);
-		return ob_get_clean();
+		return $actionResult->execute($controller);
 	}
 
 	function action($actionName, $controllerName = null) {
-		echo $this->action($actionName, $controllerName);
+		echo $this->renderAction($actionName, $controllerName);
 	}
 
 	function renderPartial($viewName, $model = null) {
@@ -43,7 +37,7 @@ class HtmlHelper {
 	}
 
 	function partial($viewName, $model = null) {
-		echo $this->partial($viewName, $model);
+		echo $this->renderPartial($viewName, $model);
 	}
 
 }

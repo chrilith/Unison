@@ -4,14 +4,17 @@ namespace Unison\Web\Mvc;
 
 class ContentResult extends ActionResult {
 
-	public $viewName;
+	public $content;
 
-	public $model;
-
-	public function __construct() {
+	public function __construct($content) {
 		parent::__construct();
 		$this->statusCode = 200;
 		$this->contentType = 'text/plain';
+		$this->content = $content;
+	}
+
+	public function execute($controller) {
+		return $this->content;
 	}
 
 }
