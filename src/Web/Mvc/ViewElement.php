@@ -4,8 +4,6 @@ namespace Unison\Web\Mvc;
 
 class ViewElement {
 
-	public $model;
-
 	public $viewContext;
 
 	public $url;
