@@ -10,7 +10,7 @@ class HtmlHelper {
 		$this->viewContext = $viewContext;
 	}
 
-	function action($actionName, $controllerName = null) {
+	function renderAction($actionName, $controllerName = null) {
 		if (!$controllerName) {
 			$controllerName = get_class($this->viewContext->controller);
 		}
@@ -26,11 +26,11 @@ class HtmlHelper {
 		return ob_get_clean();
 	}
 
-	function renderAction($actionName, $controllerName = null) {
+	function action($actionName, $controllerName = null) {
 		echo $this->action($actionName, $controllerName);
 	}
 
-	function partial($viewName, $model = null) {
+	function renderPartial($viewName, $model = null) {
 		$ctx = clone $this->viewContext;
 		$partial = new ViewElement($ctx);
 		if ($model == null) {
@@ -41,7 +41,7 @@ class HtmlHelper {
 		return ob_get_clean();
 	}
 
-	function renderPartial($viewName, $model = null) {
+	function partial($viewName, $model = null) {
 		echo $this->partial($viewName, $model);
 	}
 

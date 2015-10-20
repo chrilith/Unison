@@ -13,7 +13,7 @@ class ViewPage extends ViewElement {
 		$this->rendered = array('sections' => array());
 	}
 
-	public function section($name, $renderer) {
+	public function defineSection($name, $renderer) {
 		ob_start();
 		$renderer();
 		$this->rendered['sections'][$name] = ob_get_clean();

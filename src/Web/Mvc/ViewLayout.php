@@ -15,7 +15,7 @@ class ViewLayout extends ViewPage {
 	}
 
 	public function renderBody() {
-		echo $this->buffer;
+		return $this->buffer;
 	}
 
 	public function renderSection($name, $required = true) {
@@ -27,8 +27,10 @@ class ViewLayout extends ViewPage {
 		}
 
 		if (array_key_exists($name, $sections)) {
-			echo $sections[$name];
+			return $sections[$name];
 		}
+
+		return '';
 	}
 }
 
