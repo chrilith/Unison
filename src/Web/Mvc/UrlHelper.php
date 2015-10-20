@@ -4,15 +4,11 @@ namespace Unison\Web\Mvc;
 
 class UrlHelper {
 
-	var $mvc;
+	public function __construct() { }
 
-	function __construct($parent) {
-		$mvc = $parent;
-	}
-
-	function content($location) {
+	public function content($location) {
 		if (strpos($location, '~/') === 0) {
-			$location = WEB_ROOT . substr($location, 2);
+			$location = UNISON_WEB_ROOT . substr($location, 2);
 		}
 		return $location;
 	}
