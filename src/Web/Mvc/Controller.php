@@ -4,6 +4,8 @@ namespace Unison\Web\Mvc;
 
 class Controller {
 
+	public function __construct() { }
+
 	public function prepareAction($action = null) {
 		$file = explode('/', $action ? $action : $_SERVER["SCRIPT_FILENAME"]);
 		$action = end($file);
