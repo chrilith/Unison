@@ -4,11 +4,17 @@ namespace Unison\Web\Mvc;
 
 class Controller {
 
-	function __construct() {
-	}
+	public function prepareAction($action = null) {
+		$file = explode('/', $action ? $action : $_SERVER["SCRIPT_FILENAME"]);
+		$action = end($file);
 
-	protected function partialView($viewName, $model = null) {
-		return $this->view($viewName, $model);
+		// Gets action name
+		$cut = strrpos($action, '.');
+		if ($cut !== false) {
+			$action = substr($action, 0, $cut);
+		}
+
+		return call_user_func_array(array($this, $action), func_get_args());	// FIXME: func_get_args
 	}
 
 	protected function view($viewName, $model = null) {
@@ -18,7 +24,6 @@ class Controller {
 
 		return $result;
 	}
-
 }
 
 ?>
