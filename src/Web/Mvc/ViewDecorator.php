@@ -30,11 +30,12 @@ abstract class ViewDecorator {
 
 	public function __call($name, $args) {
 		switch ($name) {
-			case 'section':
-			case 'renderSection':
-			case 'renderBody':
+			case 'defineSection':
 				call_user_func_array(array(&$this->parent, $name), $args);
 				break;
+			case 'renderSection':
+			case 'renderBody':
+				return call_user_func_array(array(&$this->parent, $name), $args);
 		}
 	}
 
