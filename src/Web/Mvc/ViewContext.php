@@ -2,16 +2,15 @@
 
 namespace Unison\Web\Mvc;
 
-class ViewContext {
+class ViewContext extends ControllerContext {
 
 	public $view;
 
 	public $viewData;
 
-	public $isChildAction;
-
-	public function __construct($viewData) {
-		$this->viewData = $viewData ? $viewData : array();
+	public function __construct(ControllerContext $controllerContext = null) {
+		parent::__construct($controllerContext);
+		$this->viewData = $this->controller ? $this->controller->viewData : array();
 	}
 
 	public function __clone() {

@@ -8,7 +8,7 @@ class MvcHandler {
 		$actionResult = $controller->executeAction();
 
 		// TODO/ catch exception
-		$content = $actionResult->execute($controller);
+		$content = $actionResult->execute($controller->controllerContext);
 
 		http_response_code($actionResult->statusCode);
 		header('Content-Type: ' . $actionResult->contentType);

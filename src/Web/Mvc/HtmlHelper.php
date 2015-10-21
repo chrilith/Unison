@@ -15,10 +15,10 @@ class HtmlHelper {
 			$controllerName = get_class($this->viewContext->controller);
 		}
 		$controller = new $controllerName();
-//		$ctx->isChildAction = true;
+		$controller->controllerContext->isChildAction = true;
 		$actionResult = $controller->executeAction($actionName);
 
-		return $actionResult->execute($controller);
+		return $actionResult->execute($controller->controllerContext);
 	}
 
 	function action($actionName, $controllerName = null) {

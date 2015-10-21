@@ -13,7 +13,7 @@ class ContentResult extends ActionResult {
 		$this->content = $content;
 	}
 
-	public function execute($controller) {
+	public function execute($controllerContext) {
 		return $this->content;
 	}
 

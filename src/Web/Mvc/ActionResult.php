@@ -10,7 +10,7 @@ abstract class ActionResult {
 
 	public function __construct() { }
 
-	abstract public function execute($controller); 
+	abstract public function execute($controllerContext); 
 }
 
 ?>

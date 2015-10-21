@@ -9,7 +9,7 @@ class EmptyResult extends ActionResult {
 		$this->statusCode = 204;
 	}
 
-	public function execute($controller) { }
+	public function execute($controllerContext) { }
 }
 
 ?>

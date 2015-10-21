@@ -11,9 +11,8 @@ class ViewResult extends ActionResult {
 		$this->contentType = 'text/html';
 	}
 
-	public function execute($controller) {
-		$ctx = new ViewContext($controller->viewData);
-		$ctx->controller = $controller;	// FIXME: not defined in this class, get rid of this (used only by HtmlHelper)
+	public function execute($controllerContext) {
+		$ctx = new ViewContext($controllerContext);
 		$page = new ViewPage($ctx);
 
 		return $this->render($page, $this->viewName, $page->viewContext->viewData["Model"]);

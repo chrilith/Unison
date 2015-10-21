@@ -6,8 +6,12 @@ class Controller {
 
 	public $viewData;
 
+	public $controllerContext;
+
 	public function __construct() {
 		$this->viewData = array();
+		$this->controllerContext = new ControllerContext();
+		$this->controllerContext->controller = $this;
 	}
 
 	public function executeAction($action = null) {

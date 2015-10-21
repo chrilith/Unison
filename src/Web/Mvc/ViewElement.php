@@ -14,7 +14,7 @@ class ViewElement {
 		$this->viewContext = $viewContext;
 		$this->viewContext->view = $this;
 		$this->html = new HtmlHelper($viewContext);
-		$this->url = new UrlHelper($viewContext);
+		$this->url = new UrlHelper();
 	}
 
 	public function render($viewName, $model = null) {
