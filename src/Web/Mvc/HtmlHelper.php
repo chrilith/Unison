@@ -29,7 +29,7 @@ class HtmlHelper {
 		$ctx = clone $this->viewContext;
 		$partial = new ViewElement($ctx);
 		if ($model == null) {
-			$model = $this->viewContext->view->model;
+			$model = $this->viewContext->viewData["Model"];
 		}
 		ob_start();
 		$partial->render($viewName, $model);
