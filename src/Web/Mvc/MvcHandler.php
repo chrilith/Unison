@@ -3,9 +3,9 @@ namespace Unison\Web\Mvc;
 
 class MvcHandler {
 
-	public function execute($controllerName) {
+	public function execute($controllerName, $actionName = null) {
 		$controller = new $controllerName();
-		$actionResult = $controller->executeAction();
+		$actionResult = $controller->executeAction($actionName);
 
 		// TODO/ catch exception
 		$content = $actionResult->execute($controller->controllerContext);
