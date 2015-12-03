@@ -29,8 +29,8 @@ class HtmlHelper {
 	}
 
 	function renderPartial($viewName, $model = null) {
-		$partial = new ViewElement($this->viewEngine);
-		$partial->path = UNISON_MVC_ROOT . 'Views/' . $viewName . '.php';	// TODO: use viewEngine
+		$result = $this->viewEngine->findPartialView($this->viewContext, $viewName);
+		$partial = $result->view;
 
 		$ctx = clone $this->viewContext;
 		if ($model != null) {
