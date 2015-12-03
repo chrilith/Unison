@@ -9,8 +9,8 @@ class ViewPage extends ViewElement {
 
 	public $rendered;
 
-	public function __construct($viewContext, $viewEngine) {
-		parent::__construct($viewContext, $viewEngine);
+	public function __construct($viewEngine) {
+		parent::__construct($viewEngine);
 		$this->rendered = array('sections' => array());
 	}
 
@@ -20,15 +20,16 @@ class ViewPage extends ViewElement {
 		$this->rendered['sections'][$name] = ob_get_clean();
 	}
 
-	public function render() {
-		$content = parent::render();
+	public function render($context) {
+		// Call it before to know if a layout should be used
+		$content = parent::render($context);
 
 		if ($this->layout) {
-			$ctx = clone $this->viewContext;
-			$layout = new ViewLayout($ctx, $this, $content);
+			$ctx = clone $context;
+			$layout = new ViewLayout($this, $content);
 			$layout->path = UNISON_MVC_ROOT . 'Views/' . $this->layout . '.php';	// TODO: use viewEngine
 
-			return $layout->render();
+			return $layout->render($ctx);
 
 		} else {
 			return $content;

@@ -22,7 +22,7 @@ class ViewResult extends ActionResult {
 		$result = $engine->findView($ctx, $this->viewName);
 
 		// Render now
-		return $result->view->render();
+		return $result->view->render($ctx);
 	}
 
 }

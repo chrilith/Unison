@@ -29,15 +29,14 @@ class HtmlHelper {
 	}
 
 	function renderPartial($viewName, $model = null) {
-		$ctx = clone $this->viewContext;
-		$partial = new ViewElement($ctx, $this->viewEngine);
+		$partial = new ViewElement($this->viewEngine);
 		$partial->path = UNISON_MVC_ROOT . 'Views/' . $viewName . '.php';	// TODO: use viewEngine
 
-		if ($model == null) {
-			$model = $this->viewContext->viewData["Model"];
+		$ctx = clone $this->viewContext;
+		if ($model != null) {
+			$ctx->viewData["Model"] = $model;
 		}
-
-		return $partial->render($model);
+		return $partial->render($ctx);
 	}
 
 	function partial($viewName, $model = null) {
