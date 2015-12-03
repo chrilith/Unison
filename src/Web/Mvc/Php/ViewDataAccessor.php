@@ -1,16 +1,16 @@
 <?php
 
-namespace Unison\Web\Mvc;
+namespace Unison\Web\Mvc\Php;
 
-abstract class ViewDecorator {
+class ViewDataAccessor {
+
 	private $parent;
 
-	public function __construct(ViewElement $parent) {
+	protected function __construct($parent, $model) {
 		$this->parent = $parent;
-	}
-
-	public function render($viewName, $model) {
-		$this->parent->viewContext->viewData["Model"] = $model;
+		if ($model != null) {
+			$this->parent->viewContext->viewData["Model"] = $model;
+		}
 	}
 
 	public function __get($prop) {
@@ -25,7 +25,7 @@ abstract class ViewDecorator {
 			case 'viewData':
 				return $this->parent->viewContext->viewData;
 			default:
-				throw new \Exception('Undefined property: ' . get_class($this->parent) . '::$' . $prop . '.');
+				throw new \Exception('Undefined property: ' . get_class($this) . '::$' . $prop . '.');
 		}
 	}
 
@@ -37,6 +37,8 @@ abstract class ViewDecorator {
 			case 'renderSection':
 			case 'renderBody':
 				return call_user_func_array(array(&$this->parent, $name), $args);
+			default:
+				throw new \Exception('Undefined method: ' . get_class($this) . '::$' . $prop . '.');
 		}
 	}
 
@@ -44,8 +46,13 @@ abstract class ViewDecorator {
 		switch ($prop) {
 			case 'layout':
 				$this->parent->{$prop} = $value;
+				break;
+			default:
+				throw new \Exception('Undefined setter: ' . get_class($this) . '::$' . $prop . '.');
 		}
 	}
+
 }
+
 
 ?>

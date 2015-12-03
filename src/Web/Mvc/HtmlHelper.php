@@ -6,8 +6,11 @@ class HtmlHelper {
 
 	private $viewContext;
 
-	function __construct(ViewContext $viewContext) {
+	private $viewEngine;
+
+	function __construct(ViewContext $viewContext, $viewEngine) {
 		$this->viewContext = $viewContext;
+		$this->viewEngine = $viewEngine;
 	}
 
 	function renderAction($actionName, $controllerName = null) {
@@ -27,13 +30,14 @@ class HtmlHelper {
 
 	function renderPartial($viewName, $model = null) {
 		$ctx = clone $this->viewContext;
-		$partial = new ViewElement($ctx);
+		$partial = new ViewElement($ctx, $this->viewEngine);
+		$partial->path = UNISON_MVC_ROOT . 'Views/' . $viewName . '.php';	// TODO: use viewEngine
+
 		if ($model == null) {
 			$model = $this->viewContext->viewData["Model"];
 		}
-		ob_start();
-		$partial->render($viewName, $model);
-		return ob_get_clean();
+
+		return $partial->render($model);
 	}
 
 	function partial($viewName, $model = null) {

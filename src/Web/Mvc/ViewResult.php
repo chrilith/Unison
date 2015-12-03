@@ -12,25 +12,19 @@ class ViewResult extends ActionResult {
 	}
 
 	public function execute($controllerContext) {
+		// Create a new context
 		$ctx = new ViewContext($controllerContext);
-		$page = new ViewPage($ctx);
 
-		return $this->render($page, $this->viewName, $page->viewContext->viewData["Model"]);
+		// Get an view engine
+		$engine = new CompositeViewEngine();
+
+		// Try to find the related view
+		$result = $engine->findView($ctx, $this->viewName);
+
+		// Render now
+		return $result->view->render();
 	}
 
-	private function render($page, $viewName, $model) {
-		ob_start();
-		$page->render($viewName, $model);
-		$content = ob_get_clean();
-
-		if ($page->layout) {
-			$ctx = clone $page->viewContext;
-			$layout = new ViewLayout($ctx, $page, $content);
-			return $this->render($layout, $page->layout, $model);
-		} else {
-			return $content;
-		}
-	}
 }
 
 ?>

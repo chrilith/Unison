@@ -2,6 +2,7 @@
 
 namespace Unison\Web\Mvc;
 
+// TODO: move to /Php
 class ViewLayout extends ViewPage {
 
 	private $buffer;
@@ -9,7 +10,7 @@ class ViewLayout extends ViewPage {
 	private $parent;
 
 	public function __construct($viewContext, $parent, $buffer) {
-		parent::__construct($viewContext);
+		parent::__construct($viewContext, $parent->viewEngine);
 		$this->buffer = $buffer;
 		$this->parent = $parent;
 	}

@@ -24,7 +24,7 @@ class Controller {
 			$action = substr($action, 0, $cut);
 		}
 
-		return call_user_func_array(array($this, $action), func_get_args());	// FIXME: func_get_args
+		return call_user_func_array(array($this, $action), func_get_args());	// FIXME: func_get_args for action parameters
 	}
 
 	protected function view($viewName, $model = null) {
