@@ -44,8 +44,8 @@ class PhpViewEngine implements Mvc\IViewEngine {
 
 		if (is_readable($location)) {
 			$view = $isPartial ?
-				new Mvc\ViewElement($context, $this) :
-				new Mvc\ViewPage($context, $this);
+				new Mvc\ViewElement($this) :
+				new Mvc\ViewPage($this);
 
 			$view->path = $location;
 
