@@ -33,17 +33,6 @@ class PhpView implements Mvc\IView {
 		return ob_get_clean();
 	}
 
-	public function getPage() {
-		return $this->page;
-	}
-
-	public function getPreviousPage() {
-		if ($this->parent) {
-			return $this->parent->getPage();
-		}
-		return null;
-	}
-
 	public function render($context, $buffer = null) {
 		// Call it before to know if a layout should be used
 		$content = $this->executor($context, $buffer);
