@@ -3,7 +3,7 @@
 namespace Unison\Web\Mvc\Php;
 use Unison\Web\Mvc;
 
-class ViewDataAccessor {
+class ViewDataAccessor implements Mvc\IPage {
 
 	public $viewContext;
 
@@ -11,20 +11,27 @@ class ViewDataAccessor {
 
 	public $url;
 
-	private $parent;
+	public $layout;
 
-	protected function __construct($context, $parent) {
-		$this->parent = $parent;
+	private $sections;
+
+	private $view;
+
+	private $renderedBody;
+
+	protected function __construct($context, $view, $buffer) {
 		$this->viewContext = $context;
+		$this->view = $view;
 
 		$this->url = new Mvc\UrlHelper();
-		$this->html = new Mvc\HtmlHelper($context, $parent->viewEngine);
+		$this->html = new Mvc\HtmlHelper($context, $view->viewEngine);
+
+		$this->renderedBody = $buffer;
+		$this->sections = array();
 	}
 
 	public function __get($prop) {
 		switch ($prop) {
-			case 'layout':
-				return $this->parent->{$prop};
 			case 'model':
 				return $this->viewContext->viewData["Model"];
 			case 'viewData':
@@ -34,29 +41,34 @@ class ViewDataAccessor {
 		}
 	}
 
-	public function __call($name, $args) {
-		switch ($name) {
-			case 'defineSection':
-				call_user_func_array(array(&$this->parent, $name), $args);
-				break;
-			case 'renderSection':
-			case 'renderBody':
-				return call_user_func_array(array(&$this->parent, $name), $args);
-			default:
-				throw new \Exception('Undefined method: ' . get_class($this) . '::$' . $prop . '.');
-		}
+	public function getSection($name) {
+		$exists = array_key_exists($name, $this->sections);
+		return $exists ? $this->sections[$name] : NULL;
 	}
 
-	public function __set($prop, $value) {
-		switch ($prop) {
-			case 'layout':
-				$this->parent->{$prop} = $value;
-				break;
-			default:
-				throw new \Exception('Undefined setter: ' . get_class($this) . '::$' . $prop . '.');
-		}
+	public function renderBody() {
+		return $this->renderedBody;
 	}
 
+	public function defineSection($name, $renderer) {
+		ob_start();
+		$renderer();
+		$this->sections[$name] = ob_get_clean();
+	}
+
+	public function renderSection($name, $required = TRUE) {
+		$parent = $this->view->parent;
+		if (!$parent) {
+			throw new \Exception('Cannot render section "' . $name . '" in a top level view.');
+		}
+
+		$content = $parent->page->getSection($name);
+		if ($required && $content === NULL) {
+			throw new \Exception('Required section "' . $name . '" was not defined.');
+		}
+
+		return $content;
+	}
 }
 
 
