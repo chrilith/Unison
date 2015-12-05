@@ -15,7 +15,7 @@ class CompositeViewEngine implements IViewEngine {
 	}
 
 	public function findPartialView($context, $viewName) {
-		return $this->internalFindView($viewName, TRUE);
+		return $this->internalFindView($context, $viewName, TRUE);
 	}
 
 	private function internalFindView($context, $viewName, $isPartial) {
