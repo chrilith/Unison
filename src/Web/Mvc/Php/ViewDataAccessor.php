@@ -13,9 +13,9 @@ class ViewDataAccessor implements Mvc\IPage {
 
 	public $layout;
 
-	private $sections;
-
 	private $view;
+
+	private $renderedSections;
 
 	private $renderedBody;
 
@@ -27,7 +27,7 @@ class ViewDataAccessor implements Mvc\IPage {
 		$this->html = new Mvc\HtmlHelper($context, $view->viewEngine);
 
 		$this->renderedBody = $buffer;
-		$this->sections = array();
+		$this->renderedSections = array();
 	}
 
 	public function __get($prop) {
@@ -42,8 +42,8 @@ class ViewDataAccessor implements Mvc\IPage {
 	}
 
 	public function getSection($name) {
-		$exists = array_key_exists($name, $this->sections);
-		return $exists ? $this->sections[$name] : NULL;
+		$exists = array_key_exists($name, $this->renderedSections);
+		return $exists ? $this->renderedSections[$name] : NULL;
 	}
 
 	public function renderBody() {
@@ -53,7 +53,7 @@ class ViewDataAccessor implements Mvc\IPage {
 	public function defineSection($name, $renderer) {
 		ob_start();
 		$renderer();
-		$this->sections[$name] = ob_get_clean();
+		$this->renderedSections[$name] = ob_get_clean();
 	}
 
 	public function renderSection($name, $required = TRUE) {
