@@ -8,12 +8,13 @@ class HtmlHelper {
 
 	private $viewEngine;
 
-	function __construct(ViewContext $viewContext, $viewEngine) {
+	function __construct(ViewContext $viewContext) {
 		$this->viewContext = $viewContext;
-		$this->viewEngine = $viewEngine;
+		// We can render any type of view
+		$this->viewEngine = new CompositeViewEngine();
 	}
 
-	function renderAction($actionName, $controllerName = null) {
+	function action($actionName, $controllerName = null) {
 		if (!$controllerName) {
 			$controllerName = get_class($this->viewContext->controller);
 		}
@@ -24,11 +25,11 @@ class HtmlHelper {
 		return $actionResult->execute($controller->controllerContext);
 	}
 
-	function action($actionName, $controllerName = null) {
-		echo $this->renderAction($actionName, $controllerName);
+	function renderAction($actionName, $controllerName = null) {
+		echo $this->action($actionName, $controllerName);
 	}
 
-	function renderPartial($viewName, $model = null) {
+	function partial($viewName, $model = null) {
 		$result = $this->viewEngine->findPartialView($this->viewContext, $viewName);
 		$partial = $result->view;
 
@@ -39,8 +40,8 @@ class HtmlHelper {
 		return $partial->render($ctx);
 	}
 
-	function partial($viewName, $model = null) {
-		echo $this->renderPartial($viewName, $model);
+	function renderPartial($viewName, $model = null) {
+		echo $this->partial($viewName, $model);
 	}
 
 }

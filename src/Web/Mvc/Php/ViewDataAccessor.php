@@ -24,7 +24,7 @@ class ViewDataAccessor implements Mvc\IPage {
 		$this->view = $view;
 
 		$this->url = new Mvc\UrlHelper();
-		$this->html = new Mvc\HtmlHelper($context, $view->viewEngine);
+		$this->html = new Mvc\HtmlHelper($context);
 
 		$this->renderedBody = $buffer;
 		$this->renderedSections = array();
@@ -47,7 +47,7 @@ class ViewDataAccessor implements Mvc\IPage {
 	}
 
 	public function renderBody() {
-		return $this->renderedBody;
+		echo $this->renderedBody;
 	}
 
 	public function defineSection($name, $renderer) {
