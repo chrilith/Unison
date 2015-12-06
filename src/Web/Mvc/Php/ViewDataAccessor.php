@@ -7,10 +7,6 @@ class ViewDataAccessor implements Mvc\IPage {
 
 	public $viewContext;
 
-	public $html;
-
-	public $url;
-
 	public $layout;
 
 	private $view;
@@ -22,10 +18,6 @@ class ViewDataAccessor implements Mvc\IPage {
 	protected function __construct($context, $view, $buffer) {
 		$this->viewContext = $context;
 		$this->view = $view;
-
-		$this->url = new Mvc\UrlHelper();
-		$this->html = new Mvc\HtmlHelper($context);
-
 		$this->renderedBody = $buffer;
 		$this->renderedSections = array();
 	}
