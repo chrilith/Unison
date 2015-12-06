@@ -67,7 +67,7 @@ class ViewDataAccessor implements Mvc\IPage {
 			throw new \Exception('Required section "' . $name . '" was not defined.');
 		}
 
-		return $content;
+		echo $content;
 	}
 }
 
